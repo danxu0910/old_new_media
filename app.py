@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 import markov
+import des_nmnt
 
 app = Flask(__name__)
 
@@ -24,6 +25,15 @@ def generate():
         "new_people" : new_people[0],
         "new_project" : new_project[0]
     })
+
+
+@app.route("/about", methods=["POST"])
+def about():
+    art_value = int(request.form["art_value"])
+    sci_value = int(request.form["sci_value"])
+    tech_value = int(request.form["tech_value"])
+
+    return des_nmnt.shuffle(art_value, sci_value, tech_value)
 
 
 if __name__ == "__main__":
