@@ -32,11 +32,31 @@ window.onload = () => {
     const sci_value = document.querySelector("#sci_value");
     const tech_value = document.querySelector("#tech_value");
 
+    const art_update = document.querySelector("#art_update");
+    const sci_update = document.querySelector("#sci_update");
+    const tech_update = document.querySelector("#tech_update");
+
     const about = () => {
         const formdata = new FormData();
         formdata.append("art_value", art_value.value);
         formdata.append("sci_value", sci_value.value);
         formdata.append("tech_value", tech_value.value);
+
+        const sums = parseInt(art_value.value) + parseInt(sci_value.value) + parseInt(tech_value.value);
+        console.log(sums)
+        if (sums != 0){
+            const art_perc = parseInt(art_value.value) * 100 / sums;
+            const sci_perc = parseInt(sci_value.value) * 100 / sums;
+            const tech_perc = parseInt(tech_value.value) * 100 / sums;
+
+            art_update.innerHTML = art_perc.toFixed(0) + "%";
+            sci_update.innerHTML = sci_perc.toFixed(0) + "%";
+            tech_update.innerHTML = tech_perc.toFixed(0) + "%";
+        } else {
+            art_update.innerHTML = "";
+            sci_update.innerHTML = "";
+            tech_update.innerHTML = "";
+        }
 
         fetch("/about", {
             method: "POST",
@@ -45,7 +65,6 @@ window.onload = () => {
             return res.text();
         }).then((data) => {
             const newabout = document.querySelector("#newabout");
-
             newabout.innerHTML = data;
 
             console.log(data);
